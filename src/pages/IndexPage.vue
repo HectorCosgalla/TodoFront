@@ -16,6 +16,7 @@
 
 <script setup>
 import { useQuasar } from "quasar";
+import CoreServices from "src/boot/services/CoreServices";
 //import { ref } from "vue";
 defineOptions({
   name: "IndexPage",
@@ -29,6 +30,7 @@ function togleAddTask() {
     message: "Add a new task to the list of unfinished tasks:",
     prompt: {
       model: "",
+      isValid: (val) => val.length > 0,
       type: "text",
     },
     ok: {
@@ -45,9 +47,10 @@ function togleAddTask() {
   })
     .onOk((data) => {
       console.log("adding:" + data);
+      CoreServices.post({ name: data });
     })
     .onCancel(() => {
-      console.log("Something was canceled! \:\(");
+      // console.log("Something was canceled! \:\(");
     });
 }
 </script>
