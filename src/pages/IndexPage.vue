@@ -39,7 +39,7 @@ function togleAddTask() {
       color: "secondary",
     },
     cancel: {
-      push: true,
+      glossy: true,
       rounded: true,
       color: "negative",
     },
