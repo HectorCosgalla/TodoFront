@@ -8,7 +8,7 @@ const roundCancel =
 const CoreServices = (function () {
   function post(data) {
     api
-      .post("/new", data)
+      .post("/tasks", data)
       .then((response) => {
         console.log(response);
         return response;

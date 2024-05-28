@@ -46,8 +46,8 @@ function togleAddTask() {
     persistent: true,
   })
     .onOk((data) => {
-      console.log("adding:" + data);
-      CoreServices.post({ name: data });
+      console.log({ title: data});
+      CoreServices.post({ title: data});
     })
     .onCancel(() => {
       // console.log("Something was canceled! \:\(");
