@@ -15,14 +15,6 @@ const roundCancel =
       console.log(error);
     }
     response.headers.location
-    // .then((response) => {
-    //   console.log(response);
-    //   return response;
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    //   notify("Something went wrong!")
-    // });
   }
 
   async function getAll(url){
