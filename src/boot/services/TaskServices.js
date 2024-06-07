@@ -1,18 +1,18 @@
 import CoreServices from "src/boot/services/CoreServices";
 
 
-function post(data){
-    CoreServices.post("/tasks",data);
+async function post(data){
+    const response = await CoreServices.post("/tasks",data);
+    return response;
 }
 
 async function getAll(){
     try{
         const response = CoreServices.getAll("/tasks");
-        return (await response)
+        return (await response).data
     }catch(error){
         console.log(error);
     }
-    
 }
 
 export default {post, getAll};

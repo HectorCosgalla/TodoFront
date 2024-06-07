@@ -10,36 +10,56 @@
         label="Add a new task"
         @click="togleAddTask"
       />
-      <q-btn
-        color="secondary"
-        class="q-ma-sm"
-        label="tricky button"
-        @click="tryGetAll"
-      />
     </div>
-    <!--<div class="q-pa-md">
+    <div class="q-pa-md">
       <q-table
-        title="Treats"
+        title="Tasks"
         :rows="rows"
         :columns="columns"
-        row-key="id"
+        row-key="rows.id"
       />
-    </div>-->
+    </div>
   </q-page>
 </template>
 
 <script setup>
-import { useQuasar } from "quasar";
-import CoreServices from "src/boot/services/CoreServices";
+import { format, useQuasar } from "quasar";
 import TaskServices from "src/boot/services/TaskServices";
-import { ref } from "vue";
+import { onMounted, onUpdated, ref } from "vue";
 defineOptions({
   name: "IndexPage",
 });
 
 const $q = useQuasar();
 
-const tasks = ref([])
+const tasks = ref([]);
+
+const unfinished_tasks = ref([])
+const finished_tasks = ref([])
+
+const columns = [
+  {
+    name:'id',
+    required: true,
+    align: 'left',
+    label: 'id',
+    field: row => row.id,
+    format: val => `${val}`
+  },
+  {
+    name:'title',
+    align:'center',
+    label:'title',
+    field: row => row.title
+  },
+  {
+    name:'isDone',
+    label: 'Is done?',
+    field: row => row.isDone
+  }
+];
+
+const rows = ref([]);
 
 function togleAddTask() {
   $q.dialog({
@@ -62,23 +82,46 @@ function togleAddTask() {
     },
     persistent: true,
   })
-    .onOk((data) => {
-      console.log({ title: data});
-      TaskServices.post({ title: data});
+    .onOk(async (data) => {
+      const newTask = await TaskServices.post({ title: data});
+      addATaskToTable(newTask);
     })
     .onCancel(() => {
-      // console.log("Something was canceled! \:\(");
+      fillTheTable();
     });
 }
 
-async function tryGetAll(){
+async function getAll(){
   try {
-    const response = TaskServices.getAll();
-    tasks.value = (await response).data
+    tasks.value = (await TaskServices.getAll());
   } catch (error) {
     console.log(error);
   }
-  
 }
+
+function sortTasks(){
+  if (tasks.value.length != 0) {
+    for (const task in tasks.value) {
+      if (task.isDone) {
+        unfinished_tasks.value.push(task);
+      } else {
+        finished_tasks.value.push(task);
+      }
+    }
+  }
+}
+
+async function fillTheTable() {
+  await getAll();
+  console.log("The table has been filled!");
+  rows.value = tasks.value;
+}
+
+function addATaskToTable(newTask){
+  rows.value.push(newTask);
+}
+
+fillTheTable();
+
 </script>
   
