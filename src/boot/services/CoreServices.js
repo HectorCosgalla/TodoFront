@@ -13,8 +13,8 @@ const roundCancel =
       return newObject.data
     } catch (error) {
       console.log(error);
+      notify("something wnet wrong!")
     }
-    response.headers.location
   }
 
   async function getAll(url){
