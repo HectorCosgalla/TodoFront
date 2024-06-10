@@ -26,6 +26,15 @@ const roundCancel =
     }
   }
 
+  async function patch(url,data){
+    try {
+      const response = await api.patch(url,data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   function notify(message){
     return Notify.create({
       message: message,
@@ -36,4 +45,4 @@ const roundCancel =
     });
   }
 
-export default {post, getAll}
+export default {post, getAll, patch}

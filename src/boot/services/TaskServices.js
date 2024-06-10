@@ -15,4 +15,8 @@ async function getAll(){
     }
 }
 
+async function patch(data){
+    
+}
+
 export default {post, getAll};

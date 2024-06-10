@@ -13,8 +13,16 @@
     </div>
     <div class="q-pa-md">
       <q-table
-        title="Tasks"
-        :rows="rows"
+        title="Unfinished tasks"
+        :rows="unfinished_tasks"
+        :columns="columns"
+        row-key="rows.id"
+      />
+    </div>
+    <div class="q-pa-md">
+      <q-table
+        title="Finished tasks"
+        :rows="finished_tasks"
         :columns="columns"
         row-key="rows.id"
       />
@@ -87,7 +95,6 @@ function togleAddTask() {
       addATaskToTable(newTask);
     })
     .onCancel(() => {
-      fillTheTable();
     });
 }
 
@@ -101,27 +108,28 @@ async function getAll(){
 
 function sortTasks(){
   if (tasks.value.length != 0) {
-    for (const task in tasks.value) {
-      if (task.isDone) {
+    for (let i = 0; i < tasks.value.length; i++) {
+      const task = tasks.value[i];
+      if (!task.isDone) {
         unfinished_tasks.value.push(task);
       } else {
         finished_tasks.value.push(task);
       }
     }
+    tasks.value = [];
   }
 }
 
 async function fillTheTable() {
   await getAll();
-  console.log("The table has been filled!");
-  rows.value = tasks.value;
+  sortTasks();
+  console.log("The tables has been filled!");
 }
 
 function addATaskToTable(newTask){
-  rows.value.push(newTask);
+  unfinished_tasks.value.push(newTask);
 }
 
 fillTheTable();
-
 </script>
   
