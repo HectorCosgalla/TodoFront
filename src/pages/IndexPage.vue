@@ -58,23 +58,10 @@ const finished_tasks = ref([])
 
 const unfinished_columns = [
   {
-    name:'id',
-    required: true,
-    align: 'left',
-    label: 'id',
-    field: row => row.id,
-    format: val => `${val}`
-  },
-  {
     name:'title',
     align:'center',
     label:'title',
     field: row => row.title
-  },
-  {
-    name:'isDone',
-    label: 'Is done?',
-    field: row => row.isDone
   },
   {
     name:'actions',
@@ -83,23 +70,10 @@ const unfinished_columns = [
 ];
 const columns = [
   {
-    name:'id',
-    required: true,
-    align: 'left',
-    label: 'id',
-    field: row => row.id,
-    format: val => `${val}`
-  },
-  {
     name:'title',
-    align:'center',
+    align:'left',
     label:'title',
     field: row => row.title
-  },
-  {
-    name:'isDone',
-    label: 'Is done?',
-    field: row => row.isDone
   }
 ];
 
