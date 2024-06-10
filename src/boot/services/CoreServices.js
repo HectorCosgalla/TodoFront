@@ -28,8 +28,7 @@ const roundCancel =
 
   async function patch(url,data){
     try {
-      const response = await api.patch(url,data);
-      console.log(response);
+      await api.patch(url,data);
     } catch (error) {
       console.log(error);
     }

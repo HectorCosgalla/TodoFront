@@ -16,7 +16,11 @@ async function getAll(){
 }
 
 async function patch(data){
-    
+    try {
+        await CoreServices.patch("/tasks/"+data.id,data)
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-export default {post, getAll};
+export default {post, getAll,patch};
